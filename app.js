@@ -1,4 +1,5 @@
 let cards = [];
+let used = [];
 
 for(let j=0;j<4;j++){
 for(let i=1;i<14;i++){
@@ -41,9 +42,36 @@ function summ(player){
     return sum;
 }
 
+function checkUsed(index){
+    for(let i=0;i<used.length;i++){
+        if(used[i] == index){
+            // randomize
+            
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+function randInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+// returns a random card
+function rand(){
+
+    return randInterval(1,52);
+}
+
 
 function hit() {
     var card = cards[Math.floor(Math.random() * cards.length)];
+
+    var index = rand();
+    var card = cards[index];
+    
     // remove that card from the array/deck
     cur_player.push(card);
 
@@ -52,14 +80,6 @@ function hit() {
     cards1.innerHTML = player1;
     cards2.innerHTML = player2;
 
-    // find the element's index and remove it from the array
-
-    let index = 0;
-    for(let i=0;i<cards.length;i++){
-        if(cards[i] == card){
-            index = i;
-        }
-    }
 
     // Adding card on the screen
     var img = document.createElement("img");
@@ -68,7 +88,26 @@ function hit() {
     img.src = "./cards/"+imgIndex.toString()+".png";
     cards1.appendChild(img);
 
-    cards.splice(index, 1);
+    // instead of removing from the array, we'll need to check
+    //cards.splice(index, 1);
+
+    let flag = 1;
+    while (flag){
+        console.log("im in while");
+        if(checkUsed(index)){
+            // randomize
+            index = rand();
+        }
+        else{
+            used.push(index);
+            flag = 0;
+        }
+
+    }
+    
+
+    // used.push(index);
+    
 
     let sum = summ(cur_player);
     console.log("sum : ");
