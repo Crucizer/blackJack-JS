@@ -5,3 +5,8 @@ body {
     font-family: "Jersey 25", sans-serif;
     font-weight: 400;
 }
+
+img {
+    width: 200px;
+    height: 300px;
+}

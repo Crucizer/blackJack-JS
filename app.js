@@ -23,16 +23,22 @@ const cards1 = document.querySelector(".player1");
 const cards2 = document.querySelector(".player2");
 const curr = document.querySelector(".curplayer");
 
+const imgs1 = document.querySelector(".oneimgs");
+const imgs2 = document.querySelector(".twoimgs");
+
 let count = 0;
 
-hitbtn.addEventListener("click", hit);
-stdbtn.addEventListener("click", stand);
+
 
 let player1 = [];
 let player2 = [];
 
 let flag = 0;
 let cur_player = player1;
+let canHit = 1;
+
+hitbtn.addEventListener("click", hit);
+stdbtn.addEventListener("click", stand);
 
 function summ(player){
     let sum = 0;
@@ -62,58 +68,62 @@ function randInterval(min, max) { // min and max included
 // returns a random card
 function rand(){
 
-    return randInterval(1,52);
+    return randInterval(0,51);
 }
 
+// Adding cards on the screen
+function addCard(index, cur_player){
+
+    var img = document.createElement("img");
+    img.classList.add("image");
+    let imgIndex = index+1;
+    img.id = index; 
+    img.src = "./cards/"+imgIndex.toString()+".png";
+    // change cards1 to curr player
+    if(cur_player == player1){
+        imgs1.appendChild(img);
+    }
+    else{
+        imgs2.appendChild(img);
+    }
+    
+}
 
 function hit() {
-    var card = cards[Math.floor(Math.random() * cards.length)];
 
     var index = rand();
-    var card = cards[index];
-    
-    // remove that card from the array/deck
-    cur_player.push(card);
-
-    // Updating the changes on screen
-
-    cards1.innerHTML = player1;
-    cards2.innerHTML = player2;
-
-
-    // Adding card on the screen
-    var img = document.createElement("img");
-    let imgIndex = index+1;
-    console.log(imgIndex);
-    img.src = "./cards/"+imgIndex.toString()+".png";
-    cards1.appendChild(img);
-
-    // instead of removing from the array, we'll need to check
-    //cards.splice(index, 1);
 
     let flag = 1;
     while (flag){
-        console.log("im in while");
         if(checkUsed(index)){
             // randomize
             index = rand();
         }
         else{
+            // Updating the changes on screen
+
+            cur_player.push(cards[index]);
+            cards1.innerHTML = player1;
+            cards2.innerHTML = player2;
+
             used.push(index);
-            flag = 0;
+
+            addCard(index, cur_player);
+            flag = 0; // exit the while loop
+
         }
 
     }
     
-
-    // used.push(index);
+    
     
 
     let sum = summ(cur_player);
-    console.log("sum : ");
-    console.log(sum);
 
     if (sum > 21){
+        hitbtn.setAttribute('disabled', '');
+        stdbtn.setAttribute('disabled', '');
+
         if(cur_player == player1){
             console.log("PLAYER 2 WINS");
         }
@@ -126,12 +136,12 @@ function hit() {
         console.log("PLAYER 2 WINS");
     }
 
-    console.log(cur_player);
 }
 
 
 
 function stand() {
+    hitbtn.removeAttribute('disabled');
     curr.innerHTML = "PLAYER 2 PLAYS";
     console.log("STAND");
     cur_player = player2;
