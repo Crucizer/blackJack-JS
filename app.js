@@ -12,7 +12,6 @@ for(let i=1;i<14;i++){
 }
 }
 
-console.log(cards);
 
 // QUERY SELECTORS
 
@@ -103,8 +102,8 @@ function hit() {
             // Updating the changes on screen
 
             cur_player.push(cards[index]);
-            cards1.innerHTML = player1;
-            cards2.innerHTML = player2;
+            cards1.innerHTML = summ(player1);
+            cards2.innerHTML = summ(player2);
 
             used.push(index);
 
@@ -126,14 +125,21 @@ function hit() {
 
         if(cur_player == player1){
             console.log("PLAYER 2 WINS");
+            curr.innerHTML = "PLAYER 2 WINS";
         }
         else{
             console.log("PLAYER 1 WINS");
+            curr.innerHTML = "PLAYER 1 WINS";
         }
+        curr.style.color = "green";
+
     }
 
     if(summ(player2) > summ(player1) && summ(player2) < 22){
         console.log("PLAYER 2 WINS");
+        curr.innerHTML = "PLAYER 2 WINS";
+        curr.style.color = "green";
+
     }
 
 }
@@ -146,4 +152,18 @@ function stand() {
     console.log("STAND");
     cur_player = player2;
     // turn will move to the next player
+}
+
+function reset (){
+    curr.innerHTML = "PLAYER 1 PLAYS";
+    curr.style.color = "black";
+    // reset arrays
+    player1 = [];
+    player2 = [];
+    used = [];
+
+    // enable buttons
+    hitbtn.setAttribute("enabled");
+    stdbtn.setAttribute("enabled");
+    var images = document.getElementsByTagName("img");
 }
