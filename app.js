@@ -1,6 +1,14 @@
 let cards = [];
 let used = [];
 
+let count = 0;
+let player1 = [];
+let player2 = [];
+
+let cur_player = player1;
+
+// Making cards
+
 for(let j=0;j<4;j++){
 for(let i=1;i<14;i++){
     if(i>9){
@@ -12,33 +20,31 @@ for(let i=1;i<14;i++){
 }
 }
 
-
 // QUERY SELECTORS
 
 const hitbtn = document.querySelector(".hitbtn");
 const stdbtn = document.querySelector(".stdbtn");
+const drawBtn = document.querySelector(".drawBtn")
+// const resetBtn = document.querySelector(".resetBtn");
+
 
 const cards1 = document.querySelector(".player1");
 const cards2 = document.querySelector(".player2");
 const curr = document.querySelector(".curplayer");
 
+const imgs = document.querySelector(".images");
 const imgs1 = document.querySelector(".oneimgs");
 const imgs2 = document.querySelector(".twoimgs");
 
-let count = 0;
 
 
-
-let player1 = [];
-let player2 = [];
-
-let flag = 0;
-let cur_player = player1;
-let canHit = 1;
-
+// Event listeners
 hitbtn.addEventListener("click", hit);
 stdbtn.addEventListener("click", stand);
+drawBtn.addEventListener("click", draw);
+resetBtn.addEventListener("click", reset);
 
+// to find sum of array
 function summ(player){
     let sum = 0;
     for(let i=0;i<player.length;i++){
@@ -66,7 +72,6 @@ function randInterval(min, max) { // min and max included
 
 // returns a random card
 function rand(){
-
     return randInterval(0,51);
 }
 
@@ -99,6 +104,10 @@ function hit() {
             index = rand();
         }
         else{
+            // To play audio
+            // var audio = new Audio('effects/cardDraw.wav');
+            // audio.play();
+
             // Updating the changes on screen
 
             cur_player.push(cards[index]);
@@ -145,7 +154,7 @@ function hit() {
 }
 
 
-
+// standBtn
 function stand() {
     hitbtn.removeAttribute('disabled');
     curr.innerHTML = "PLAYER 2 PLAYS";
@@ -154,6 +163,7 @@ function stand() {
     // turn will move to the next player
 }
 
+// resetBtn
 function reset (){
     curr.innerHTML = "PLAYER 1 PLAYS";
     curr.style.color = "black";
@@ -165,5 +175,19 @@ function reset (){
     // enable buttons
     hitbtn.setAttribute("enabled");
     stdbtn.setAttribute("enabled");
-    var images = document.getElementsByTagName("img");
+    // remove all the images from the screen
+    var images = document.getElementsByTagName('img');
+
+}
+
+// drawBtn
+function draw() {
+    if(summ(player1) == summ(player2)){
+        curr.innerHTML = "DRAW";
+        curr.style.color = "blue";
+
+        // disable all buttons
+        hitbtn.setAttribute("disabled");
+        stdbtn.setAttribute("disabled");
+    }
 }

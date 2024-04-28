@@ -6,7 +6,40 @@ body {
     font-weight: 400;
 }
 
-img {
-    width: 200px;
-    height: 300px;
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image {
+    width: 150px;
+    height: 200px;
+    /* display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    position: relative; */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 80px;
+    height: 40px;
+    margin-right: 20px;
+    font-family: inherit;
+    font-size: x-large;
+}
+.hitbtn {
+    background-color: rgb(131, 245, 197)
+}
+.stdbtn {
+    background-color: rgb(231, 102, 102);
+}
+
+.player1, .player2 {
+    color: rgb(71, 69, 69);
 }
