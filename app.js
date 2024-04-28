@@ -149,6 +149,10 @@ function hit() {
         curr.innerHTML = "PLAYER 2 WINS";
         curr.style.color = "green";
 
+        // disable buttons
+        hitbtn.setAttribute('disabled', '');
+        stdbtn.setAttribute('disabled', '');
+
     }
 
 }
